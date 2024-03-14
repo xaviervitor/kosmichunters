@@ -1,0 +1,28 @@
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Platforms/
+Releases/
+Saved/
+
+# OS/platform generated files.
+
+# Windows
+ehthumbs.db
+Thumbs.db
+
+# Mac OS X
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+
+# Visual Studio
+.vs
+.vscode
