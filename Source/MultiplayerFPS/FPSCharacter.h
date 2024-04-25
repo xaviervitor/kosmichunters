@@ -92,6 +92,11 @@ public:
 	UFUNCTION(NetMulticast, Reliable) void DetachEquippedWeaponNetMulticast();
 	UFUNCTION(NetMulticast, Reliable) void RagdollNetMulticast(FVector Impulse = FVector::ZeroVector, FName BoneName = NAME_None);
 	
+	UFUNCTION(BlueprintCallable) void SwitchCharacter(int32 CharacterListIndex); 
+	UFUNCTION(Server, Reliable) void SwitchCharacterServer(int32 CharacterListIndex);
+	UFUNCTION(Client, Reliable) void SwitchCharacterClient(int32 CharacterListIndex);
+	UFUNCTION(NetMulticast, Reliable) void SwitchCharacterNetMulticast(int32 CharacterListIndex);
+
 	UFUNCTION(BlueprintPure) FVector GetCameraLocation();
 	UFUNCTION(BlueprintPure) FRotator GetCameraRotation();
 	UFUNCTION(BlueprintPure) FVector GetForwardVector();

@@ -134,8 +134,8 @@ void AWeapon::SetFirstPersonWeaponNetMulticast_Implementation() {
 void AWeapon::SetThirdPersonWeaponNetMulticast_Implementation() {
 	for (UPrimitiveComponent* Child : GetWeaponChildren()) {
 		Child->SetOwnerNoSee(true);
-		Child->SetCastShadow(true);
-		Child->SetCastHiddenShadow(true);
+		Child->SetCastShadow(false);
+		Child->SetCastHiddenShadow(false);
 	}
 }
 

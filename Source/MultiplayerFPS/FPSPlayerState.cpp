@@ -7,4 +7,5 @@ void AFPSPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty >& Out
 
     DOREPLIFETIME(AFPSPlayerState, Kills);
     DOREPLIFETIME(AFPSPlayerState, Deaths);
+    DOREPLIFETIME(AFPSPlayerState, CharacterInfoIndex);
 }

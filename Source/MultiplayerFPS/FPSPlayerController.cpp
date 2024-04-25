@@ -1,6 +1,9 @@
 #include "FPSPlayerController.h"
+
 #include "Blueprint/UserWidget.h"
 #include "PlayerMenu.h"
+#include "FPSPlayerState.h"
+#include "FPSCharacter.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
 void AFPSPlayerController::BeginPlay() {
@@ -15,21 +18,36 @@ void AFPSPlayerController::BeginPlay() {
     }
 }
 
+void AFPSPlayerController::OnPossess(APawn* InPawn) {
+    Super::OnPossess(InPawn);
+	AFPSPlayerState* FPSPlayerState = Cast<AFPSPlayerState>(PlayerState);
+	if (FPSPlayerState) {
+        AFPSCharacter* FPSCharacter = Cast<AFPSCharacter>(InPawn);
+        if (FPSCharacter) {
+            FPSCharacter->SwitchCharacter(FPSPlayerState->GetCharacterInfoIndex());
+        }
+	}
+}
+
 void AFPSPlayerController::SetScoreboardVisibility(bool bVisibility) {
-    if (PlayerMenu) {
+    if (PlayerMenu && !bIsPaused) {
         PlayerMenu->SetScoreboardVisibility(bVisibility);
     }
 }
 
-void AFPSPlayerController::TogglePauseVisibility() {
-    if (PlayerMenu) {
-        PlayerMenu->TogglePauseVisibility();
-    }
+void AFPSPlayerController::TogglePause() {
     bIsPaused = !bIsPaused;
-    bShowMouseCursor = bIsPaused;
-    bEnableClickEvents = bIsPaused;
-    bEnableMouseOverEvents = bIsPaused;
-    if (bIsPaused) {
+    SetPauseVisibility(bIsPaused);
+}
+
+void AFPSPlayerController::SetPauseVisibility(bool bVisibility) {
+    if (PlayerMenu) {
+        PlayerMenu->SetPauseVisibility(bVisibility);
+    }
+    bShowMouseCursor = bVisibility;
+    bEnableClickEvents = bVisibility;
+    bEnableMouseOverEvents = bVisibility;
+    if (bVisibility) {
         UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(this);
     } else {
         UWidgetBlueprintLibrary::SetInputMode_GameOnly(this);

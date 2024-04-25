@@ -11,3 +11,10 @@ TArray<AFPSPlayerState*> AFPSGameState::GetPlayerStatesOrderedByKills() {
     });
     return FPSPlayerStates;
 }
+
+TArray<FCharacterInfo> AFPSGameState::GetCharacterList() {
+    if (CharacterListDataAsset) 
+        return CharacterListDataAsset->GetCharacterList();
+    else
+        return TArray<FCharacterInfo>();
+}

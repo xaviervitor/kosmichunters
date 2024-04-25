@@ -11,8 +11,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/GameMode.h"
-#include "FPSPlayerState.h"
 #include "MultiplayerFPS.h"
+#include "FPSGameState.h"
+#include "FPSPlayerState.h"
 #include "FPSPlayerController.h"
 
 AFPSCharacter::AFPSCharacter() {
@@ -197,7 +198,7 @@ void AFPSCharacter::HideScoreboard(const FInputActionValue& Value) {
 
 void AFPSCharacter::TogglePause(const FInputActionValue& Value) {
 	AFPSPlayerController* PlayerController = Cast<AFPSPlayerController>(GetController());
-	if (PlayerController) PlayerController->TogglePauseVisibility();
+	if (PlayerController) PlayerController->TogglePause();
 }
 
 void AFPSCharacter::Fire(const FInputActionValue& Value) {
@@ -300,6 +301,37 @@ void AFPSCharacter::SwitchWeaponServer_Implementation(int32 Index) {
 		SwitchWeaponNetMulticast(Index);
 		EquippedWeaponIndex = Index;
 		PlaySoundAtLocationNetMulticast(WeaponSwitchSound);
+	}
+}
+
+void AFPSCharacter::SwitchCharacter(int32 CharacterListIndex) {
+	SwitchCharacterServer(CharacterListIndex);
+}
+
+void AFPSCharacter::SwitchCharacterServer_Implementation(int32 CharacterListIndex) {
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController) {
+		AFPSPlayerState* FPSPlayerState = PlayerController->GetPlayerState<AFPSPlayerState>();
+		if (FPSPlayerState) {
+			FPSPlayerState->SetCharacterInfoIndex(CharacterListIndex);
+		}
+	}
+	SwitchCharacterClient(CharacterListIndex);
+	SwitchCharacterNetMulticast(CharacterListIndex);
+}
+
+void AFPSCharacter::SwitchCharacterClient_Implementation(int32 CharacterListIndex) {
+	AFPSGameState* FPSGameState = GetWorld()->GetGameState<AFPSGameState>();
+	if (FPSGameState) {
+		FirstPersonArms->SetSkeletalMesh(FPSGameState->GetCharacterList()[CharacterListIndex].FirstPersonArms);
+		FirstPersonBody->SetSkeletalMesh(FPSGameState->GetCharacterList()[CharacterListIndex].FirstPersonBody);
+	}
+}
+
+void AFPSCharacter::SwitchCharacterNetMulticast_Implementation(int32 CharacterListIndex) {
+	AFPSGameState* FPSGameState = GetWorld()->GetGameState<AFPSGameState>();
+    if (FPSGameState) {
+		GetThirdPersonMesh()->SetSkeletalMesh(FPSGameState->GetCharacterList()[CharacterListIndex].ThirdPersonMesh);
 	}
 }
 

@@ -11,7 +11,22 @@
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off",
-		"npm.autoDetect": "off"
+		"npm.autoDetect": "off",
+		"files.associations": {
+			"*.ipp": "cpp",
+			"format": "cpp",
+			"future": "cpp",
+			"istream": "cpp",
+			"locale": "cpp",
+			"memory": "cpp",
+			"thread": "cpp",
+			"tuple": "cpp",
+			"type_traits": "cpp",
+			"xlocmes": "cpp",
+			"xlocmon": "cpp",
+			"xlocnum": "cpp",
+			"xloctime": "cpp"
+		}
 	},
 	"extensions": {
 		"recommendations": [
