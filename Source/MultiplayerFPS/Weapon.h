@@ -66,5 +66,4 @@ public:
 	UFUNCTION(BlueprintPure) FORCEINLINE FString GetName() { return WeaponName; }
 	UFUNCTION(BlueprintPure) FORCEINLINE EWeaponType GetWeaponType() { return WeaponType; }
 	UFUNCTION(BlueprintPure) FORCEINLINE FVector GetMuzzleLocation() { return MuzzleSceneComponent->GetComponentLocation(); }
-	// UFUNCTION(BlueprintPure) FORCEINLINE FRotator GetMuzzleRotation() { return MuzzleSceneComponent->GetComponentRotation(); }
 };

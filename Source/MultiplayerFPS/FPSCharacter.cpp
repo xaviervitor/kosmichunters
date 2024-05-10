@@ -45,8 +45,10 @@ AFPSCharacter::AFPSCharacter() {
 	CharacterMovementComponent->MaxWalkSpeed = 1200.0f;
 	CharacterMovementComponent->JumpZVelocity = 460.0f;
 	CharacterMovementComponent->AirControl = 0.5f;
-	CharacterMovementComponent->BrakingDecelerationFlying = 4096.0f; // Climbing Ladder
 	CharacterMovementComponent->BrakingFrictionFactor = 1.0f;
+
+	// Climbing Ladder
+	CharacterMovementComponent->BrakingDecelerationFlying = 4096.0f; 
 }
 
 void AFPSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
@@ -74,7 +76,6 @@ void AFPSCharacter::BeginPlay() {
 	if (HasAuthority()) {
 		Health = MaxHealth;
 		Armor = 0.0f;
-		// PlaySoundAtLocationNetMulticast(SpawnSound);
 	}
 
 	GameMode = Cast<AMultiplayerFPSGameModeBase>(GetWorld()->GetAuthGameMode());	
@@ -218,7 +219,9 @@ void AFPSCharacter::NextWeapon(const FInputActionValue& Value) {
 
 void AFPSCharacter::SetControlRotationPitchServer_Implementation(float InCameraRotationPitch) {
 	CameraRotationPitch = InCameraRotationPitch;
-	OnRep_CameraRotationPitch(); // The server has to call the OnRep function manually because it is the one sending the replication updates. (https://nerivec.github.io/old-ue4-wiki/pages/network-replication-using-replicatedusing-repnotify-vars.html)
+	// The server has to call the OnRep function manually because it is the one sending the
+	// replication updates.
+	OnRep_CameraRotationPitch(); 
 }
 
 void AFPSCharacter::PlayAnimMontageNetMulticast_Implementation(UAnimMontage* AnimMontage) {
@@ -388,7 +391,6 @@ void AFPSCharacter::AbsorbArmor(float Damage) {
 
 void AFPSCharacter::Damage(AFPSCharacter* KillerCharacter, FName BoneName, float Damage, float ImpulseDamage, FVector ImpulseDirection) {
 	if (!IsAlive()) return;
-	// AbsorbArmor(Damage);
 	RemoveHealth(Damage);
 
 	if (Health > 0.0f) {
@@ -406,14 +408,14 @@ void AFPSCharacter::Die(AFPSCharacter* KillerCharacter, FName BoneName, float Im
     if (ImpulseDamage != 0.0f || GetCharacterMovement()->IsFalling()) {
         RagdollNetMulticast(ImpulseDirection * ImpulseDamage, BoneName);
     } else {
-        PlayAnimMontageNetMulticast(DeathAnimMontage); // Ragdoll is activated using an AnimNotify inside the montage
+		// Ragdoll is activated using an AnimNotify inside the montage
+        PlayAnimMontageNetMulticast(DeathAnimMontage); 
     }
     DetachEquippedWeaponNetMulticast();
     GameMode->OnDeath(GetController(), KillerCharacter->GetController(), RespawnTime);
 }
 
 void AFPSCharacter::RagdollNetMulticast_Implementation(FVector Impulse, FName BoneName) {
-	// DrawDebugLine(GetWorld(), GetActorLocation(), Impulse, FColor::Emerald, false, 5.0f);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	USkeletalMeshComponent* ThirdPersonMesh = GetThirdPersonMesh();
 	ThirdPersonMesh->SetCollisionProfileName("Ragdoll");

@@ -88,7 +88,6 @@ FHitResult AWeapon::FPSCharacterCameraLineTrace() {
 	QueryParams.AddIgnoredActors(TArray<AActor*>({FPSCharacter}));
 	UWorld* World = GetWorld();
 	World->LineTraceSingleByChannel(Hit, Start, End, Channel, QueryParams);
-	// DebugDrawLineTrace(Start, End, Hit);
 	return Hit;
 }
 

@@ -60,8 +60,6 @@ void AProjectile::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 		AProjectileExplosion* ProjectileExplosion = GetWorld()->SpawnActorDeferred<AProjectileExplosion>(ProjectileExplosionClass, ProjectileExplosionTransform, GetOwner(), GetInstigator(), ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		ProjectileExplosion->SetDamage(Damage);
 		UGameplayStatics::FinishSpawningActor(ProjectileExplosion, ProjectileExplosionTransform);
-
-		// DebugDrawHitResult(OtherActor, Hit);
 	}
 	Destroy();
 }
@@ -79,11 +77,10 @@ void AProjectile::SetLocationToMuzzleAndRotationToTargetNetMulticast_Implementat
 	}
 
 	FVector ProjectileMeshLocation = Weapon->GetMuzzleLocation();
-	// FVector StartPosition = Weapon->GetMuzzleLocation();
-	// FVector TargetPosition = HitImpactPoint;
-	// FRotator ProjectileMeshRotation = (TargetPosition - StartPosition).Rotation();
-
 	StaticMeshComponent->SetWorldLocation(ProjectileMeshLocation);
+	// ProjectileMeshRotation doesn't need to be updated to reflect the new Location, based on
+	// the MuzzleLocation. I didn't find the reason, but it only affects a visual Actor without
+	// collision, and it visually works.
 }
 
 void AProjectile::DebugDrawHitResult(AActor* OtherActor, const FHitResult& Hit) {
