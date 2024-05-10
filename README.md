@@ -1,11 +1,17 @@
-# multiplayerfps
+# Kosmic Hunters
 
-a multiplayer first-person shooter built with unreal engine.
+A multiplayer first-person shooter built with Unreal Engine.
 
-## instructions 
-1. clone the repository;
-2. open the `MultiplayerFPS.uproject` file;
-3. (vscode) select `Tools` > `Generate Visual Studio Code project`;
-4. (vscode) open the `MultiplayerFPS.code-workspace` file.
+---
+Note: the original repository for this project had to be deleted because it used Git LFS and quickly exceeded the monthly bandwidth. That's why this repository doesn't have commits older than <a href="https://github.com/xaviervitor/kosmichunters/commit/dd973a36ae636c00a5f6f21ea3e0cb3b7bda3a4c">14 Mar 2024</a>, despite initial work having started about December 2023.
 
-5. (optional) lightmass built data can't be included in the repository. to really see what levels look like, lightmass has to be baked in Production quality.
+## Instructions 
+1. Clone the repository;
+2. Open the `MultiplayerFPS.uproject` file;
+3. (vscode) Select `Tools` > `Generate Visual Studio Code project`;
+4. (vscode) Open the `MultiplayerFPS.code-workspace` file.
+
+Lightmass built data can't be included in the repository. To bake the lighting of the levels:
+
+5. (unreal) Select `Build` > `Lighting Quality` > `Production`;
+6. (unreal) Select `Build` > `Build Lighting Only`;
