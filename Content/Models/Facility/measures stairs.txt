@@ -1,0 +1,28 @@
+height 7.1808 m
+stair width 5.71 (new) 6.0 (old)
+curvature 101.25
+inner radius 22.17 (new), 16.1952 (old)
+rotation z 202.5
+num stairs 36
+
+extrusion height -6.07451 m
+
+height 5.14064 m
+inner radius -7.53616 m ou -8.95149 m
+stair width -3.13994 m
+numstairs 32
+curvature 90
+
+height 12.3067 m
+inner radius 11.234
+stair width 3.604
+curvature 157.5
+num steps 64
+rotation z 146.25
+
+height 6.36853 m
+stair width 4.027
+inner radius 28.1476 + 2.01332
+curvature 33.75 - 5.625
+num steps
+rotation z 78.75d

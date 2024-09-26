@@ -1,0 +1,1 @@
+translate -1.42m in blender to center arms in camera
